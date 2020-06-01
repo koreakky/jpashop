@@ -1,6 +1,7 @@
 package com.utti.jpashop.domain.item;
 
 import com.utti.jpashop.domain.Category;
+import com.utti.jpashop.domain.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,4 +25,20 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+    //==비즈니스 로직==//
+    /**
+     * 재고 증가
+     * @param stockQuantity
+     */
+    public void addStock(int stockQuantity){
+        this.stockQuantity += stockQuantity;
+    }
+
+    public void removeStock(int stockQuantity){
+        int restStock = this.stockQuantity - stockQuantity;
+        if(restStock < 0){
+            throw new NotEnoughStockException("need more stock");
+        }
+    }
 }
