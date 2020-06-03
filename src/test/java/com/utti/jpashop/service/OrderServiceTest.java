@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.swing.plaf.BorderUIResource;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +31,7 @@ public class OrderServiceTest {
     @Test
     public void 상품주문() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
 
         Book book = createBook("시골 JPA", 10000, 10);
 
@@ -53,7 +52,7 @@ public class OrderServiceTest {
     @Test(expected = NotEnoughStockException.class)
     public void 재고수량초과() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
         Item item = createBook("시골 JPA", 10000, 10);
         int orderCount = 11;
 
@@ -67,7 +66,7 @@ public class OrderServiceTest {
     @Test
     public void 주문취소() throws Exception {
         //given
-        Member member = createMember();
+        Member member = createMember("회원1");
         Item item = createBook("시골 JPA", 10000, 10); //이름, 가격, 재고
         int orderCount = 2;
 
@@ -83,9 +82,9 @@ public class OrderServiceTest {
         assertEquals("주문 취소된 상품은 그만큼 재고가 증가해야 한다.", 10, item.getStockQuantity());
     }
 
-    private Member createMember(){
+    private Member createMember(String name){
         Member member = new Member();
-        member.setName("회원1");
+        member.setName(name);
         member.setAddress(new Address("서울", "강가", "123-123"));
         em.persist(member);
         return member;
