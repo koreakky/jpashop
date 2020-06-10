@@ -1,5 +1,6 @@
 package com.utti.jpashop.service;
 
+import com.utti.jpashop.domain.item.Book;
 import com.utti.jpashop.domain.item.Item;
 import com.utti.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,15 @@ public class ItemService {
     @Transactional
     public void saveItem(Item item){
         itemRepository.save(item);
+    }
+
+    @Transactional
+    public Item updateItem(Long itemId, Book param){
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.setName(param.getName());
+        findItem.setPrice(param.getPrice());
+        findItem.setStockQuantity(param.getStockQuantity());
+        return findItem;
     }
 
     public List<Item> findItems(){
