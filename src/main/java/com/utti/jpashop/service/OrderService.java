@@ -1,13 +1,11 @@
 package com.utti.jpashop.service;
 
-import com.utti.jpashop.domain.Delivery;
-import com.utti.jpashop.domain.Member;
-import com.utti.jpashop.domain.Order;
-import com.utti.jpashop.domain.OrderItem;
+import com.utti.jpashop.domain.*;
 import com.utti.jpashop.domain.item.Item;
 import com.utti.jpashop.repository.ItemRepository;
 import com.utti.jpashop.repository.MemberRepository;
 import com.utti.jpashop.repository.OrderRepository;
+import com.utti.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +38,7 @@ public class OrderService {
         //배송정보 생성
         Delivery delivery = new Delivery();
         delivery.setAddress(member.getAddress());
+        delivery.setStatus(DeliveryStatus.READY);
 
         //주문정보 생성
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
@@ -66,9 +65,9 @@ public class OrderService {
     /**
      * 주문 검색
      */
-   /* public List<Order> findOrders(OrderSearch orderSearch){
-        return orderRepository.findAll(orderSearch);
-    }
-    */
+   public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByString(orderSearch);
+   }
+
 
 }
