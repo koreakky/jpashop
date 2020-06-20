@@ -8,12 +8,14 @@ import com.utti.jpashop.service.ItemService;
 import com.utti.jpashop.service.MemberService;
 import com.utti.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -50,6 +52,7 @@ public class OrderController {
 
     @PostMapping("/orders/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId){
+        log.debug(">> cancelOrder : "+ orderId);
         orderService.cancelOrder(orderId);
         return "redirect:/orders";
     }

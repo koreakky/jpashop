@@ -57,8 +57,9 @@
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
 </body>
-<script>
+<script type="text/javascript">
     function cancel(id) {
+        alert(id);
         var form = document.createElement("form");
         form.setAttribute("method", "post");
         form.setAttribute("action", "/orders/" + id + "/cancel");
